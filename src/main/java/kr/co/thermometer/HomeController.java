@@ -1,6 +1,9 @@
 package kr.co.thermometer;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -36,20 +39,22 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		callJpa();
+		List<Temperature> listTemperature = callJpa();
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("temperateDate", listTemperature.get(0).getTemperature());
 		
 		return "home";
 	}
 	
-	public static void callJpa() {
+	public static List<Temperature> callJpa() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("thermometer");
 		EntityManager em = emf.createEntityManager(); //엔티티 매니저 생성
 		EntityTransaction tx = em.getTransaction(); //트랜잭션 기능 획득
+		List<Temperature> listTemperature = new ArrayList<Temperature>();
 		
         try {
             tx.begin(); //트랜잭션 시작
-            selectJpa(em);  //비즈니스 로직
+            listTemperature = selectTemperature(em);  //비즈니스 로직
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -60,10 +65,11 @@ public class HomeController {
         }
 
         emf.close(); //엔티티 매니저 팩토리 종료
+        return listTemperature;
 	}
 	
-	public static void insertJpa(EntityManager em) {
-		String id = "id1";
+	public static void insertMember(EntityManager em) {
+		String id = "id2";
 		Member member = new Member();
 		member.setId(id);
 		member.setUsername("예니");
@@ -73,7 +79,7 @@ public class HomeController {
 		
 	}
 	
-	public static void selectJpa(EntityManager em) {
+	public static void selectMember(EntityManager em) {
 		String id = "id1";
 		//한 건 조회
         Member findMember = em.find(Member.class, id);
@@ -83,5 +89,33 @@ public class HomeController {
         List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
         System.out.println("members.size=" + members.size());
 
+	}
+
+	public static void insertTemperature(EntityManager em) {
+		String id = "id1";
+		Temperature temperature = new Temperature();
+		Date date = new Date();
+		
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar time = Calendar.getInstance();
+		
+		temperature.setId(id);
+		temperature.setDate(format.format(time.getTime()));
+		temperature.setTemperature(1);
+		em.persist(temperature);
+		
+	}
+	
+	public static List<Temperature> selectTemperature(EntityManager em) {
+		String id = "id1";
+		//한 건 조회
+		Temperature findTemperature = em.find(Temperature.class, id);
+		System.out.println("findTemperature=" + findTemperature.getTemperature() + ", Date=" + findTemperature.getDate());
+		
+		//목록 조회
+		List<Temperature> temperature = em.createQuery("select m from Temperature m", Temperature.class).getResultList();
+		System.out.println("temperature.size=" + temperature.size());
+		
+		return temperature;
 	}
 }
