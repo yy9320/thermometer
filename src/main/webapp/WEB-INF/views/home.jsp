@@ -10,6 +10,10 @@
   crossorigin="anonymous"></script>
 <script src="/semantic/dist/semantic.min.js"></script>
 	<title>Home</title>
+<script type="text/javascript">
+	var temperateDate = "${temperateDate}";
+	alert(temperateDate);
+</script>
 </head>
 <body>
 <h1>
