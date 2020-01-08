@@ -9,6 +9,7 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
 <script src="/semantic/dist/semantic.min.js"></script>
+<script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script>
 	<title>Home</title>
 <script type="text/javascript">
 	var temperateDate = "${temperateDate}";
@@ -16,11 +17,28 @@
 		var rowItem = "";
 		for(var i = 0; i < 14; i++){
 			var temperate = temperateDate;
-			rowItem += "<td>" + temperate + "</td>"
+			var selectBox = '<div class="ui dropdown label temperate"> '
+		     + '<div class="text">1</div>'
+		     + '<i class="dropdown icon"></i>'
+		     + '<div class="menu">'
+		     + '<div class="item">2</div>'
+		     + '<div class="item">3</div>'
+		     + '<div class="item">4</div>'
+		     + '<div class="item">5</div>';
+			rowItem += "<td>" + selectBox + "</td>"
 		}
 		$(rowItem).appendTo(document.getElementsByClassName("name"));
+		$('.ui.dropdown').dropdown({
+            direction:'auto', 
+            duration:100,
+            onChange:function(value, text, $choice){
+            }
+        });
+        $('#target').accordion({exclusive:false});
 	}
+	
 </script>
+
 </head>
 <body>
 <h1>
@@ -76,7 +94,19 @@
     <tr class="name">
       <td>John</td>
     </tr>
-  </tbody>
+  
+</tbody>
+  
 </table>
 </body>
+ <script>
+        $('.ui.dropdown').dropdown({
+            direction:'auto', 
+            duration:100,
+            onChange:function(value, text, $choice){
+            }
+        });
+        $('#target').accordion({exclusive:false});
+ 
+    </script>
 </html>
