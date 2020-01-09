@@ -13,12 +13,35 @@
 	<title>Home</title>
 <script type="text/javascript">
 	var temperateDate = "${temperateDate}";
+	var userId = "${id}";
+	var temperatureList = "${temperatureList}";
+	var a = "${temperatureList[0].id}";
+	
 	window.onload = function(){
+		
+		$.ajax({
+		    url: "listdata",
+		    type: "GET",
+		    dataType: "JSON",
+		    success: function(data){
+		    	var jsonData = data.data;
+		    	for(var i=0; i<jsonData.length; i++){
+		    		
+			    	alert(jsonData[i].id);
+		    	}
+		    },
+
+		    error: function (request, status, error){        
+				alert(status);
+		    }
+
+		  });
+
 		var rowItem = "";
-		for(var i = 0; i < 14; i++){
+		for(var i = 0; i < 7; i++){
 			var temperate = temperateDate;
 			var selectBox = '<div class="ui dropdown label temperate"> '
-		     + '<div class="text">1</div>'
+		     + '<div class="text" id="date_' + i + '">1</div>'
 		     + '<i class="dropdown icon"></i>'
 		     + '<div class="menu">'
 		     + '<div class="item">2</div>'
@@ -57,13 +80,7 @@
       <th>1/4</th>
       <th>1/4</th>
       <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
+      <th>AVG</th>
     </tr>
   </thead>
   <tbody>
@@ -82,19 +99,6 @@
     <tr class="name">
       <td>John</td>
     </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-  
 </tbody>
   
 </table>

@@ -12,13 +12,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.JSpinner.ListEditor;
 
+import org.eclipse.persistence.sessions.serializers.JSONSerializer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sun.tools.xjc.reader.RawTypeSet.Mode;
 
 /**
  * Handles requests for the application home page.
@@ -49,6 +59,33 @@ public class HomeController {
 		model.addAttribute("temperatureList", listTemperature);
 		return "home";
 	}
+
+	@ResponseBody
+	@RequestMapping(value ="listdata", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getListData(Locale locale, Model model, HttpServletResponse response, HttpServletRequest request) {
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		List<Temperature> listTemperature = new ArrayList<Temperature>();
+		listTemperature = callJpa();
+		int size = listTemperature.size();
+		
+		JSONArray jsonArr =  new JSONArray();
+		for (int i=0; i<listTemperature.size(); i++){
+			JSONObject result = new JSONObject();
+			result.put("id", listTemperature.get(i).getId().toString());
+			result.put("date", listTemperature.get(i).getDate().toString());
+			result.put("temperature", listTemperature.get(i).getTemperature().toString());
+			jsonArr.add(result);
+		}
+		
+		JSONObject jsonObj = new JSONObject();
+		System.out.println(jsonArr);
+		jsonObj.put("data", jsonArr);
+		return jsonObj;
+	}
+	
 	
 	public static List<Temperature> callJpa() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("thermometer");
@@ -78,9 +115,7 @@ public class HomeController {
 		member.setId(id);
 		member.setUsername("예니");
 		member.setAge(2);
-		
 		em.persist(member);
-		
 	}
 	
 	public static void selectMember(EntityManager em) {
