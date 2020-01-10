@@ -12,10 +12,10 @@
 <script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script>
 	<title>Home</title>
 <script type="text/javascript">
-	var temperateDate = "${temperateDate}";
-	var userId = "${id}";
-	var temperatureList = "${temperatureList}";
-	var a = "${temperatureList[0].id}";
+// 	var temperateDate = "${temperateDate}";
+// 	var userId = "${id}";
+// 	var temperatureList = "${temperatureList}";
+// 	var a = "${temperatureList[0].id}";
 	
 	window.onload = function(){
 		
@@ -26,8 +26,23 @@
 		    success: function(data){
 		    	var jsonData = data.data;
 		    	for(var i=0; i<jsonData.length; i++){
-		    		
-			    	alert(jsonData[i].id);
+					var rowItem = "<tr>";
+		    		var idTd = '<td>' + jsonData[i].id + '</td>';
+		    		var selectBox = "";
+		    		for (var j=0; j<jsonData.length; j++){
+			    		selectBox += '<td><div class="ui dropdown label temperate" id="date_' + i +'"> '
+			   		     + '<div class="text" id="date2_' + i + '">1</div>'
+			   		     + '<i class="dropdown icon"></i>'
+			   		     + '<div class="menu">'
+			   		     + '<div class="item">2</div>'
+			   		     + '<div class="item">3</div>'
+			   		     + '<div class="item">4</div>'
+			   		     + '<div class="item">5</div></td>';
+			   		  	var valueID = "date2_" + i;
+// 		    			document.getElementById(valueID).innerHTML = jsonData[j].temperature;
+		    		}
+		   			rowItem += idTd +  selectBox + "</tr>";
+				$(rowItem).appendTo(document.getElementsByClassName("tbody"));
 		    	}
 		    },
 
@@ -37,20 +52,6 @@
 
 		  });
 
-		var rowItem = "";
-		for(var i = 0; i < 7; i++){
-			var temperate = temperateDate;
-			var selectBox = '<div class="ui dropdown label temperate"> '
-		     + '<div class="text" id="date_' + i + '">1</div>'
-		     + '<i class="dropdown icon"></i>'
-		     + '<div class="menu">'
-		     + '<div class="item">2</div>'
-		     + '<div class="item">3</div>'
-		     + '<div class="item">4</div>'
-		     + '<div class="item">5</div>';
-			rowItem += "<td>" + selectBox + "</td>"
-		}
-		$(rowItem).appendTo(document.getElementsByClassName("name"));
 		$('.ui.dropdown').dropdown({
             direction:'auto', 
             duration:100,
@@ -78,27 +79,20 @@
       <th>1/3</th>
       <th>1/4</th>
       <th>1/4</th>
-      <th>1/4</th>
-      <th>1/4</th>
       <th>AVG</th>
     </tr>
   </thead>
-  <tbody>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
-    <tr class="name">
-      <td>John</td>
-    </tr>
+  <tbody class="tbody">
+<!--     <tr class="name"> -->
+<!--     </tr> -->
+<!--     <tr class="name"> -->
+<!--     </tr> -->
+<!--     <tr class="name"> -->
+<!--     </tr> -->
+<!--     <tr class="name"> -->
+<!--     </tr> -->
+<!--     <tr class="name"> -->
+<!--     </tr> -->
 </tbody>
   
 </table>

@@ -48,15 +48,15 @@ public class HomeController {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
-		String formattedDate = dateFormat.format(date);
-		List<Temperature> listTemperature = new ArrayList<Temperature>();
-		listTemperature = callJpa();
-		int size = listTemperature.size();
-		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("temperateDate", listTemperature.get(0).getTemperature());
-		model.addAttribute("userId", listTemperature.get(0).getId());
-		model.addAttribute("size", size);
-		model.addAttribute("temperatureList", listTemperature);
+//		String formattedDate = dateFormat.format(date);
+//		List<Temperature> listTemperature = new ArrayList<Temperature>();
+//		listTemperature = callJpa();
+//		int size = listTemperature.size();
+//		model.addAttribute("serverTime", formattedDate );
+//		model.addAttribute("temperateDate", listTemperature.get(0).getTemperature());
+//		model.addAttribute("userId", listTemperature.get(0).getId());
+//		model.addAttribute("size", size);
+//		model.addAttribute("temperatureList", listTemperature);
 		return "home";
 	}
 
