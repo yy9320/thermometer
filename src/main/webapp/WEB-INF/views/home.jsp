@@ -12,11 +12,6 @@
 <script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script>
 	<title>Home</title>
 <script type="text/javascript">
-// 	var temperateDate = "${temperateDate}";
-// 	var userId = "${id}";
-// 	var temperatureList = "${temperatureList}";
-// 	var a = "${temperatureList[0].id}";
-	
 	window.onload = function(){
 		
 		$.ajax({
@@ -38,12 +33,20 @@
 			   		     + '<div class="item">3</div>'
 			   		     + '<div class="item">4</div>'
 			   		     + '<div class="item">5</div></td>';
-			   		  	var valueID = "date2_" + i;
-// 		    			document.getElementById(valueID).innerHTML = jsonData[j].temperature;
+			   		  	var valueID = "#date2_" + i;
+		    			var x = jsonData[j].temperature;
+		    			$(valueID).text(x);
 		    		}
 		   			rowItem += idTd +  selectBox + "</tr>";
 				$(rowItem).appendTo(document.getElementsByClassName("tbody"));
 		    	}
+				$('.ui.dropdown').dropdown({
+		            direction:'auto', 
+		            duration:100,
+		            onChange:function(value, text, $choice){
+		            }
+		        });
+		        $('#target').accordion({exclusive:false});
 		    },
 
 		    error: function (request, status, error){        
@@ -52,13 +55,6 @@
 
 		  });
 
-		$('.ui.dropdown').dropdown({
-            direction:'auto', 
-            duration:100,
-            onChange:function(value, text, $choice){
-            }
-        });
-        $('#target').accordion({exclusive:false});
 	}
 	
 </script>
@@ -83,28 +79,8 @@
     </tr>
   </thead>
   <tbody class="tbody">
-<!--     <tr class="name"> -->
-<!--     </tr> -->
-<!--     <tr class="name"> -->
-<!--     </tr> -->
-<!--     <tr class="name"> -->
-<!--     </tr> -->
-<!--     <tr class="name"> -->
-<!--     </tr> -->
-<!--     <tr class="name"> -->
-<!--     </tr> -->
 </tbody>
   
 </table>
 </body>
- <script>
-        $('.ui.dropdown').dropdown({
-            direction:'auto', 
-            duration:100,
-            onChange:function(value, text, $choice){
-            }
-        });
-        $('#target').accordion({exclusive:false});
- 
-    </script>
 </html>
