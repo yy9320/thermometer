@@ -2,7 +2,8 @@
 <%@ page session="false" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -13,6 +14,7 @@
 	<title>Home</title>
 <script type="text/javascript">
 	window.onload = function(){
+
 		
 		$.ajax({
 		    url: "listdata",
@@ -24,21 +26,22 @@
 					var rowItem = "<tr>";
 		    		var idTd = '<td>' + jsonData[i].id + '</td>';
 		    		var selectBox = "";
-		    		for (var j=0; j<jsonData.length; j++){
+		    		var avg = 0;
+		    		for (var j=0; j<jsonData.length-1; j++){
 			    		selectBox += '<td><div class="ui dropdown label temperate" id="date_' + i +'"> '
-			   		     + '<div class="text" id="date2_' + i + '">1</div>'
+			   		     + '<div class="text" id="date2_' + i + '">' + jsonData[i].temperature + '</div>'
 			   		     + '<i class="dropdown icon"></i>'
 			   		     + '<div class="menu">'
+			   		     + '<div class="item">1</div>'
 			   		     + '<div class="item">2</div>'
 			   		     + '<div class="item">3</div>'
 			   		     + '<div class="item">4</div>'
 			   		     + '<div class="item">5</div></td>';
 			   		  	var valueID = "#date2_" + i;
-		    			var x = jsonData[j].temperature;
-		    			$(valueID).text(x);
+		    			avg = avg + Number(jsonData[i].temperature);
 		    		}
-		   			rowItem += idTd +  selectBox + "</tr>";
-				$(rowItem).appendTo(document.getElementsByClassName("tbody"));
+		   			rowItem += idTd +  selectBox + "<td>" + avg/(jsonData.length-1) + "</td> </tr>";
+					$(rowItem).appendTo(document.getElementsByClassName("tbody"));
 		    	}
 				$('.ui.dropdown').dropdown({
 		            direction:'auto', 
@@ -62,7 +65,6 @@
 </head>
 <body>
 <h1>
-	Hello world!  
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
