@@ -14,8 +14,6 @@
 	<title>Home</title>
 <script type="text/javascript">
 	window.onload = function(){
-
-		
 		$.ajax({
 		    url: "listdata",
 		    type: "GET",
