@@ -1,5 +1,7 @@
 package kr.co.thermometer;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@IdClass(PkClass.class)
 @Table(name="TEMPERATURE")
 public class Temperature {
 	
 	@Id
 	@Column(name = "ID")
 	private String id ;
-	
+
+	@Id
 	private String date;
 	
 	private Integer temperature;
