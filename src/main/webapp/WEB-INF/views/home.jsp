@@ -21,24 +21,37 @@
 		    success: function(data){
 		    	var jsonData = data.data;
 		    	for(var i=0; i<jsonData.length; i++){
-					var rowItem = "<tr>";
-		    		var idTd = '<td>' + jsonData[i].id + '</td>';
 		    		var selectBox = "";
 		    		var avg = 0;
-		    		for (var j=0; j<jsonData.length-1; j++){
-			    		selectBox += '<td><div class="ui dropdown label temperate" id="date_' + i +'"> '
-			   		     + '<div class="text" id="date2_' + i + '">' + jsonData[i].temperature + '</div>'
-			   		     + '<i class="dropdown icon"></i>'
-			   		     + '<div class="menu">'
-			   		     + '<div class="item">1</div>'
-			   		     + '<div class="item">2</div>'
-			   		     + '<div class="item">3</div>'
-			   		     + '<div class="item">4</div>'
-			   		     + '<div class="item">5</div></td>';
-			   		  	var valueID = "#date2_" + i;
-		    			avg = avg + Number(jsonData[i].temperature);
+					var rowItem = "<tr>";
+					var idTd = "";
+		    		for (var j=0; j<5; j++){
+		    			if (jsonData[i][j] != null){
+		    				idTd = '<td>' + jsonData[i][j].id + '</td>';
+				    		selectBox += '<td><div class="ui dropdown label temperate" id="date_' + i +'"> '
+				   		     + '<div class="text" id="date2_' + i + '">' + jsonData[i][j].temperature + '</div>'
+				   		     + '<i class="dropdown icon"></i>'
+				   		     + '<div class="menu">'
+				   		     + '<div class="item">1</div>'
+				   		     + '<div class="item">2</div>'
+				   		     + '<div class="item">3</div>'
+				   		     + '<div class="item">4</div>'
+				   		     + '<div class="item">5</div></td>';
+				   		  	var valueID = "#date2_" + i;
+			    			avg = avg + Number(jsonData[i][j].temperature);
+		    			} else {
+		    				selectBox += '<td><div class="ui dropdown label temperate"> '
+				   		     + '<div class="text" > - </div>'
+				   		     + '<i class="dropdown icon"></i>'
+				   		     + '<div class="menu">'
+				   		     + '<div class="item">1</div>'
+				   		     + '<div class="item">2</div>'
+				   		     + '<div class="item">3</div>'
+				   		     + '<div class="item">4</div>'
+				   		     + '<div class="item">5</div></td>';
+		    			}
 		    		}
-		   			rowItem += idTd +  selectBox + "<td>" + avg/(jsonData.length-1) + "</td> </tr>";
+		   			rowItem += idTd +  selectBox + "<td>" + avg/(jsonData[i].length) + "</td> </tr>";
 					$(rowItem).appendTo(document.getElementsByClassName("tbody"));
 		    	}
 				$('.ui.dropdown').dropdown({
